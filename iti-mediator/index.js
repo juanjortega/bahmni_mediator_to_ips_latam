@@ -141,8 +141,10 @@ async function getEncounterFHIR(encounterId) {
 async function getObservationsFHIR(patientId) {
   return await getListResources(`${FHIR_PROXY}/fhir/Observation?patient=${patientId}`, 'Observation')
 }
+// Solo la lista de problemas del paciente: los diagnósticos de cada consulta
+// (category=encounter-diagnosis) no van a la sección de problemas del IPS.
 async function getConditionsFHIR(patientId) {
-  return await getListResources(`${FHIR_PROXY}/fhir/Condition?patient=${patientId}`, 'Condition')
+  return await getListResources(`${FHIR_PROXY}/fhir/Condition?patient=${patientId}&category=problem-list-item`, 'Condition')
 }
 async function getAllergiesFHIR(patientId) {
   return await getListResources(`${FHIR_PROXY}/fhir/AllergyIntolerance?patient=${patientId}`, 'AllergyIntolerance')
